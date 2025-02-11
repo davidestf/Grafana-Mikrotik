@@ -14,6 +14,25 @@ services:
     ports:
       - "3000:3000"
 
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    restart: always
+    ports:
+      - 8086:8086
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    volumes:
+      # Data persistency
+      # mkdir -p /srv/docker/influxdb/data ; chown -R 1000:1000 /srv/docker/influxdb/data ; chmod -R 775 /srv/docker/influxdb/data
+      - /srv/docker/influxdb/data:/var/lib/influxdb2
+    env_file:
+      - .influxdb
+
   prometheus:
     image: prom/prometheus
     env_file:
