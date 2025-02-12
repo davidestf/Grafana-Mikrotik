@@ -37,6 +37,9 @@ services:
     image: prom/prometheus
     env_file:
       - .prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=1y"
     user: ${CURRENT_USER}
     container_name: mk_prometheus
     restart: always
