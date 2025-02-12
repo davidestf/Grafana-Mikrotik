@@ -45,7 +45,7 @@ services:
     restart: always
     volumes:
       - ./prometheus/:/etc/prometheus
-      - ./prometheus/data/:/prometheus
+      - /srv/docker/prometheus/data/:/prometheus
     ports:
       - "9090:9090"
 
